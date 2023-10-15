@@ -9,6 +9,9 @@ const stripeRoutes = require('./routes/stripeRoutes');
 
 const app = express();
 
+app.use('/stripe', stripeRoutes);
+
+
 app.use(bodyParser.json());
 app.use(helmet());
 
@@ -20,7 +23,6 @@ app.get('/', (req, res) => {
 app.use(userRouter);
 app.use(subscriptionRouter);
 
-app.use('/stripe', stripeRoutes);
 
 
 const PORT = process.env.PORT || 3000;
