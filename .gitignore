@@ -1,0 +1,14 @@
+# Node specific
+node_modules/
+npm-debug.log
+
+# Environment variables
+.env
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# IDE specific
+.vscode/
+*.idea/
