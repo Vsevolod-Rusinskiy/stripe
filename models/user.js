@@ -20,7 +20,12 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    subscriptionId: DataTypes.INTEGER
+    subscriptionId: DataTypes.INTEGER,
+    paymentStatus: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'Pending'
+    }
   }, {
     sequelize,
     modelName: 'User',
