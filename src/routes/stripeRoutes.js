@@ -7,10 +7,10 @@ const { User } = require('../models');
 
 router.post('/create-payment-intent', async (req, res) => {
     try {
-        const { amount } = req.body; // предполагается, что сумма будет передана в минимальных единицах валюты (например, центы)
+        const { amount } = req.body;
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
-            currency: 'usd', // укажите свою валюту
+            currency: 'usd',
         });
         res.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
@@ -19,7 +19,7 @@ router.post('/create-payment-intent', async (req, res) => {
 });
 
 router.post('/webhook', express.raw({type: 'application/json'}), async (req, res) => {
-    console.log("Received webhook request");  // <-- добавьте этот лог
+    console.log("Received webhook request");
     let event;
 
     try {
@@ -29,7 +29,7 @@ router.post('/webhook', express.raw({type: 'application/json'}), async (req, res
             process.env.STRIPE_WEBHOOK_SECRET
         );
     } catch (err) {
-        console.error("Error while processing webhook:", err);  // <-- добавьте этот лог
+        console.error("Error while processing webhook:", err);
 
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
@@ -37,7 +37,7 @@ router.post('/webhook', express.raw({type: 'application/json'}), async (req, res
     switch (event.type) {
         case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
-            const user = await User.findOne({ where: { email: "john.doe@example.com" } }); // Замените "email_of_user" на реальный email или другой способ поиска пользователя.
+            const user = await User.findOne({ where: { email: "john.doe@example.com" } });
             if (user) {
                 user.paymentStatus = 'Paid';
                 await user.save();
@@ -49,19 +49,19 @@ router.post('/webhook', express.raw({type: 'application/json'}), async (req, res
             const paymentError = event.data.object;
             console.log(`Payment failed! ID: ${paymentError.id} due to ${paymentError.last_payment_error.message}`);
 
-            const failedUser = await User.findOne({ where: { email: "john.doe@example.com" } }); // Замените "email_of_user" на реальный email или другой способ поиска пользователя.
+            const failedUser = await User.findOne({ where: { email: "john.doe@example.com" } });
             if (failedUser) {
                 failedUser.paymentStatus = 'Failed';
                 await failedUser.save();
             }
             break;
 
-        // Добавьте другие события по мере необходимости...
+
         default:
             return res.status(400).end();
     }
 
-    // Возвращаем успешный статус
+
     res.json({received: true});
 });
 

@@ -5,8 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
 
     return queryInterface.addColumn(
-        'Users', // имя таблицы
-        'paymentStatus', // имя новой колонки
+        'Users',
+        'paymentStatus',
         {
           type: Sequelize.STRING,
           allowNull: true,
