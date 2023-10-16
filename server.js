@@ -2,9 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const userRouter = require('./routes/usersRoutes'); // Укажите правильный путь
-const subscriptionRouter = require('./routes/subscriptionsRouter'); // Укажите правильный путь
-const stripeRoutes = require('./routes/stripeRoutes');
+const userRouter = require('./src/routes/usersRoutes'); // Укажите правильный путь
+const subscriptionRouter = require('./src/routes/subscriptionsRouter'); // Укажите правильный путь
+const stripeRoutes = require('./src/routes/stripeRoutes');
 
 
 const app = express();
