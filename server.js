@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const userRouter = require('./src/routes/usersRoutes'); // Укажите правильный путь
-const subscriptionRouter = require('./src/routes/subscriptionsRouter'); // Укажите правильный путь
+const userRouter = require('./src/routes/usersRoutes');
+const subscriptionRouter = require('./src/routes/subscriptionsRouter');
 const stripeRoutes = require('./src/routes/stripeRoutes');
 
 
@@ -19,7 +19,6 @@ app.get('/', (req, res) => {
     res.send('Subscription Backend is Running');
 });
 
-// Подключаем маршрутизаторы
 app.use(userRouter);
 app.use(subscriptionRouter);
 
